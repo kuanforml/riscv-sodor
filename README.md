@@ -172,6 +172,7 @@ as appropriate.
 Environment Settings
 ----------------------------
 First, install java 8
+
 (for macOS)
 
     $ brew cask install java8
