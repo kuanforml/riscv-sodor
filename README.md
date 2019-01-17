@@ -124,24 +124,6 @@ the path to the local Chisel source directory to the configure script.
     $ ./configure --with-riscv=/usr/local --with-chisel=../chisel
     $ make
 
-Creating a source release package
-=================================
-
-    $ make dist-src
-
-
-Running the RISC-V tests
-========================
-
-    $ make run-emulator
-
-Gathering the results
----------------------
-
-    (all)   $ make reports
-    (cpi)   $ make reports-cpi
-    (bp)    $ make reports-bp
-    (stats) $ make reports-stats
 
 (Optional) Running debug version to produce signal traces
 ---------------------------------------------------------
