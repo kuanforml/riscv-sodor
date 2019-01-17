@@ -169,6 +169,24 @@ compiler, then you may only need to change the name of the compiler used
 may need to specify "-m32 --with-arch=RV32I" for the compiler and linker flags
 as appropriate.
 
+Environment Settings
+----------------------------
+First, install java 8
+(for macOS)
+
+    $ brew cask install java8
+
+(for ubuntu)
+
+    $ sudo add-apt-repository ppa:webupd8team/java
+    $ sudo apt-get update
+    $ sudo sudo apt-get install oracle-java8-installer
+    $ sudo sudo apt-get install oracle-java8-set-default
+
+Then, install sbt aforementioned.
+
+    
+
 
 Hardware Emulation
 ----------------------------
