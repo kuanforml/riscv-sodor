@@ -45,6 +45,67 @@ cd riscv-sodor
 git submodule update --init --recursive
 ```
 
+Building the processor emulators
+================================
+
+Because this repository is designed to be used as RISC-V processor
+examples written in [Chisel3](https://github.com/freechipsproject/chisel3/wiki) (and a regressive testsuite for Chisel updates),
+no external [RISC-V tools](http://riscv.org) are used (with the exception of
+the RISC-V [front-end server](https://github.com/codelec/riscv-fesvr) and
+optionally, the [spike-dasm](https://github.com/riscv/riscv-isa-run) binary to
+provide a disassembly of instructions in the generated *.out files).
+The assumption is that [riscv-gnu-toolchain](https://github.com/riscv/riscv-gnu-toolchain) is not
+available on the local system.  Thus, RISC-V unit tests and benchmarks were
+compiled and committed to the sodor repository in the ./install directory (as are the .dump files).
+
+Install verilator using any of the following possible ways
+For Ubuntu 17.04
+```bash
+sudo apt install pkg-config verilator
+#optionally gtkwave to view waveform dumps
+```
+
+For Ubuntu 16.10 and lower
+```bash 
+sudo apt install pkg-config
+wget http://mirrors.kernel.org/ubuntu/pool/universe/v/verilator/verilator_3.900-1_amd64.deb
+sudo dpkg -i verilator_3.900-1_amd64.deb
+```
+
+If you don't have enough permissions to use apt on your machine
+```bash
+# make autoconf g++ flex bison should be available
+wget https://www.veripool.org/ftp/verilator-3.906.tgz
+tar -xzf verilator-3.906.tgz
+cd verilator-3.906
+unset VERILATOR_ROOT
+./configure
+make
+export VERILATOR_ROOT=$PWD
+export PATH=$PATH:$VERILATOR_ROOT/bin
+```
+
+Install the RISC-V front-end server to talk between the host and RISC-V target processors.
+```bash
+cd riscv-fesvr
+mkdir build; cd build
+../configure --prefix=/usr/local
+make install 
+```
+
+Build the sodor emulators
+```bash
+./configure --with-riscv=/usr/local
+make
+# To run the all the stages with the given tests available in ./install
+make run-emulator
+# To install the executables on the local system
+make install
+# Clean all generated files
+make clean
+```
+(Although you can set the prefix to any directory of your choice, they must be
+the same directory for both riscv-fesvr and riscv-sodor).
 
 (Alternative) Build together with Chisel sources
 ------------------------------------------------
