@@ -182,9 +182,33 @@ You will see a binary executable "emulator" in the directory.
 
 If you just want to run the pre-compiled benchmarks(i.e. provided by RISCV), type
     (run pre-compiled benchmarks)
+
     $ ./emulator +max-cycles=1000000 +loadmem=../../install/riscv-bmakrs/dhrystone.riscv none 
       3>&1 1>&2 2>&3 | ../common/tracer.py
 
 You will see the emulation result and the tracer statistical information. Also, you can modify dhrystone.riscv to other .riscv files in "riscv-bmakrs"(i.e. c program benchmakrs) or "riscv-tests"(i.e. assembly benchmakrs).
 
-Additionally, the emulation for your own custom banchmarks is also provided.
+Additionally, the emulation for your own custom banchmarks is also provided, which can be performed by running the .riscv files compiled by yourself instead of .riscv files provided by RISCV.
+    (compiling custom benchmark)
+
+    $ cd test/custom-bmarks
+    
+Then, after writing your own c programs in this directory, modify the Makefile
+
+    PROGRAM=your_program_name
+
+And type
+
+    $ make clean
+    $ make
+The your_program_name.riscv(e.g. in this case, SHA256.riscv) will be generated.
+
+    $ ./emulator +max-cycles=1000000 +loadmem=../../test/custom-bmarks/your_program_name.riscv none 
+      3>&1 1>&2 2>&3 | ../common/tracer.py
+Then, the simulation result will be generated.
+
+(Optional)
+You can also dump the assembly of the generated binary by typing
+
+    $ riscv64-unknown-linux-gnu-objdump your_program_name.riscv --disassemble-all --disassemble-zeroes
+      -section=.text --section=.data --section=.text.startup
